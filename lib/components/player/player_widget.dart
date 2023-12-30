@@ -11,9 +11,9 @@ export 'player_model.dart';
 class PlayerWidget extends StatefulWidget {
   const PlayerWidget({
     super.key,
-    required this.track,
-    required this.tracklist,
-    required this.tracktitle,
+    this.track,
+    this.tracklist,
+    this.tracktitle,
   });
 
   final String? track;
@@ -100,7 +100,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     size: 24.0,
                   ),
                   onPressed: () async {
-                    Navigator.pop(context);
+                    context.safePop();
                   },
                 ),
               ),
@@ -139,20 +139,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   sliderActiveColor: FlutterFlowTheme.of(context).secondary,
                   sliderInactiveColor:
                       FlutterFlowTheme.of(context).secondaryBackground,
-                  backwardIconPath: Icon(
-                    Icons.replay_10,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24.0,
-                  ),
-                  forwardIconPath: Icon(
-                    Icons.forward_10,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24.0,
-                  ),
-                  backwardIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  forwardIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
                   pauseIconPath: Icon(
                     Icons.pause_sharp,
                     color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -163,37 +149,10 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     size: 24.0,
                   ),
-                  pauseIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  playIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  playbackDurationTextColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  previousIconPath: Icon(
-                    Icons.skip_previous_sharp,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24.0,
-                  ),
-                  nextIconPath: Icon(
-                    Icons.skip_next,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24.0,
-                  ),
-                  previousIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  nextIconColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  dropdownTextColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  timerIcon: Icon(
-                    Icons.timer_sharp,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24.0,
-                  ),
-                  playlistImage:
-                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/new-qasas-f219mx/assets/3tgx6hyivp6h/NEW2_LOGO-PWA-512-Noa.png',
                   musicUrls: FFAppConstants.tracks,
                   musicTitles: FFAppConstants.titles,
+                  playlistImage:
+                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/new-qasas-f219mx/assets/3tgx6hyivp6h/NEW2_LOGO-PWA-512-Noa.png',
                 ),
               ),
             ),

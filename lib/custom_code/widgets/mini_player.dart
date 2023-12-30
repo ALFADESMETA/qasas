@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:just_audio/just_audio.dart';
 import 'dart:async';
-import '../widgets/qasas_player.dart'; // Assuming QasasPlayer is in the 'widgets' directory
+import '/custom_code/qasas_player.dart'; // Assuming QasasPlayer is in the 'widgets' directory
 
 class MiniPlayer extends StatefulWidget {
   final Color sliderActiveColor;

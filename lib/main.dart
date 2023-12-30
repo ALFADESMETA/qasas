@@ -21,7 +21,6 @@ void main() async {
   await actions.fixDeviceOrientationUp();
   await actions.stopAudio();
   await actions.initAudioService();
-  await actions.audioHandler();
   // End initial custom actions code
 
   final appState = FFAppState(); // Initialize FFAppState
