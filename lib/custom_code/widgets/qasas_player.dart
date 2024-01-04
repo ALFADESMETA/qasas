@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/custom_code/actions/player_bloc.dart';
 import '/custom_code/actions/player_event.dart';
@@ -185,3 +186,6 @@ class _QasasPlayerState extends State<QasasPlayer> {
     return "${twoDigits(duration.inHours)}:${twoDigits(duration.inMinutes.remainder(60))}:${twoDigits(duration.inSeconds.remainder(60))}";
   }
 }
+
+// Set your widget name, define your parameter, and then add the
+// boilerplate code using the green button on the right!
