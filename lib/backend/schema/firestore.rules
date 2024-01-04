@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{document} {
+      allow create: if request.auth.uid == document;
+      allow read: if request.auth.uid == document;
+      allow write: if request.auth.uid == document;
+      allow delete: if false;
+    }
+
+    match /tracks/{document} {
+      allow create: if request.resource.data.track_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.track_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.track_user == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /categories/{document} {
+      allow create: if request.resource.data.cat_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.cat_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.cat_user == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /ads/{document} {
+      allow create: if request.resource.data.ads_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.ads_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.ads_user == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /notifications/{document} {
+      allow create: if request.resource.data.sender == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.sender == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.sender == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /videos/{document} {
+      allow create: if request.resource.data.postedBy == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.postedBy == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.postedBy == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+
+    match /age/{document} {
+      allow create: if request.resource.data.age_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.age_user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if false;
+      allow delete: if resource.data.age_user == /databases/$(database)/documents/users/$(request.auth.uid);
+    }
+  }
+}
