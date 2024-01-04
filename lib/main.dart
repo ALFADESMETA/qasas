@@ -1,15 +1,14 @@
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
-
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
+import 'package:new_qasas/custom_code/actions/player_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,16 +24,37 @@ void main() async {
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => appState,
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => appState),
+        Provider<PlayerBloc>(
+          create: (context) => PlayerBloc(
+            musicUrls: [
+              'https://firebasestorage.googleapis.com/v0/b/qasasapp.appspot.com/o/users%2FfOXq1u3t0tX6PmLfdAIyRp4qxEo2%2Fuploads%2F1703717170915000_0.mp3?alt=media&token=cb103b00-b823-4b7a-9ac8-de905a6649d9',
+              'https://firebasestorage.googleapis.com/v0/b/qasasapp.appspot.com/o/users%2FfOXq1u3t0tX6PmLfdAIyRp4qxEo2%2Fuploads%2F1703717170915000_1.mp3?alt=media&token=e2d89aa7-15ad-42c6-af72-ef6657db93da',
+              'https://firebasestorage.googleapis.com/v0/b/qasasapp.appspot.com/o/users%2FfOXq1u3t0tX6PmLfdAIyRp4qxEo2%2Fuploads%2F1703717170915000_2.mp3?alt=media&token=7cc477a5-e5e9-4322-8523-2002bee96e9d',
+            ],
+            titles: [
+              'test track 1',
+              'test track 2',
+              'test track 3',
+            ],
+            initialUrl:
+                'https://firebasestorage.googleapis.com/v0/b/qasasapp.appspot.com/o/users%2FfOXq1u3t0tX6PmLfdAIyRp4qxEo2%2Fuploads%2F1703717160888000.mp3?alt=media&token=61b7c3a5-ce89-4475-9f95-071a5d44b092',
+            playlistImage:
+                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/new-qasas-f219mx/assets/3tgx6hyivp6h/NEW2_LOGO-PWA-512-Noa.png',
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   State<MyApp> createState() => _MyAppState();
 
