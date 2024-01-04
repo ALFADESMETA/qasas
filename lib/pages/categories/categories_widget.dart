@@ -4,10 +4,6 @@ import '/components/nav_bar1/nav_bar1_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:async';
-import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -99,325 +95,241 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           centerTitle: true,
           elevation: 2.0,
         ),
-        body: SafeArea(
-          top: true,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        FFAppState().currentTrackIndex.toString(),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                      FutureBuilder<List<TracksRecord>>(
-                        future: queryTracksRecordOnce(),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
+        body: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 200.0, 0.0, 0.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      FFAppState().currentTrackIndex.toString(),
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                    ),
+                    FutureBuilder<List<TracksRecord>>(
+                      future: queryTracksRecordOnce(),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
                               ),
-                            );
-                          }
-                          List<TracksRecord> listViewTracksRecordList =
-                              snapshot.data!;
-                          return ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(
-                              0,
-                              0,
-                              0,
-                              100.0,
                             ),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listViewTracksRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewTracksRecord =
-                                  listViewTracksRecordList[listViewIndex];
-                              return InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  unawaited(
-                                    () async {
-                                      await actions.stopAudio();
-                                    }(),
-                                  );
-                                  setState(() {
-                                    FFAppState().currentURL =
-                                        listViewTracksRecord.audioUrl;
-                                    FFAppState().trackID =
-                                        listViewTracksRecord.reference.id;
-                                    FFAppState().trackList =
-                                        (currentUserDocument?.userTracks
-                                                    .toList() ??
-                                                [])
-                                            .map((e) => e.trackId)
-                                            .toList()
-                                            .cast<String>();
-                                    FFAppState().currentTrackIndex =
-                                        listViewIndex;
-                                  });
+                          );
+                        }
+                        List<TracksRecord> listViewTracksRecordList =
+                            snapshot.data!;
+                        return ListView.builder(
+                          padding: const EdgeInsets.fromLTRB(
+                            0,
+                            0,
+                            0,
+                            100.0,
+                          ),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewTracksRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewTracksRecord =
+                                listViewTracksRecordList[listViewIndex];
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                setState(() {
+                                  FFAppState().currentURL =
+                                      listViewTracksRecord.audioUrl;
+                                  FFAppState().trackID =
+                                      listViewTracksRecord.reference.id;
+                                  FFAppState().trackList = (currentUserDocument
+                                              ?.userTracks
+                                              .toList() ??
+                                          [])
+                                      .map((e) => e.trackId)
+                                      .toList()
+                                      .cast<String>();
+                                  FFAppState().currentTrackIndex =
+                                      listViewIndex;
+                                });
 
-                                  context.pushNamed(
-                                    'Categories',
-                                    queryParameters: {
-                                      'tracktest': serializeParam(
-                                        listViewTracksRecord.audioUrl,
-                                        ParamType.String,
-                                      ),
-                                      'tracklisttest': serializeParam(
-                                        listViewTracksRecord.trackUrlList,
-                                        ParamType.String,
-                                        true,
-                                      ),
-                                      'indextest': serializeParam(
-                                        FFAppState().currentTrackIndex,
-                                        ParamType.int,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: const TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType: PageTransitionType.fade,
-                                        duration: Duration(milliseconds: 0),
-                                      ),
-                                    },
-                                  );
+                                context.pushNamed(
+                                  'Categories',
+                                  queryParameters: {
+                                    'tracktest': serializeParam(
+                                      listViewTracksRecord.audioUrl,
+                                      ParamType.String,
+                                    ),
+                                    'tracklisttest': serializeParam(
+                                      listViewTracksRecord.trackUrlList,
+                                      ParamType.String,
+                                      true,
+                                    ),
+                                    'indextest': serializeParam(
+                                      FFAppState().currentTrackIndex,
+                                      ParamType.int,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: const TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 0),
+                                    ),
+                                  },
+                                );
 
-                                  setState(() {
-                                    FFAppState().openAudio = true;
-                                  });
-                                  setState(() {
-                                    FFAppState().trackID =
-                                        listViewTracksRecord.reference.id;
-                                  });
-                                  setState(() {
-                                    FFAppState().playerState = true;
-                                  });
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 74.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 0.0, 20.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
+                                setState(() {
+                                  FFAppState().openAudio = true;
+                                });
+                                setState(() {
+                                  FFAppState().trackID =
+                                      listViewTracksRecord.reference.id;
+                                });
+                                setState(() {
+                                  FFAppState().playerState = true;
+                                });
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                height: 74.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  20.0, 0.0, 20.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 65.0,
+                                                    height: 65.0,
+                                                    decoration: const BoxDecoration(),
+                                                    child: Hero(
+                                                      tag: listViewTracksRecord
+                                                          .audioThumbnail,
+                                                      transitionOnUserGestures:
+                                                          true,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        child: Image.network(
+                                                          listViewTracksRecord
+                                                              .audioThumbnail,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 50.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      decoration:
+                                                          const BoxDecoration(),
+                                                      child: Text(
+                                                        listViewTracksRecord
+                                                            .title,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Container(
-                                                      width: 65.0,
-                                                      height: 65.0,
-                                                      decoration:
-                                                          const BoxDecoration(),
-                                                      child: Hero(
-                                                        tag:
-                                                            listViewTracksRecord
-                                                                .audioThumbnail,
-                                                        transitionOnUserGestures:
-                                                            true,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                          child: Image.network(
-                                                            listViewTracksRecord
-                                                                .audioThumbnail,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                    Icon(
+                                                      Icons.play_arrow,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
                                                     ),
                                                   ],
                                                 ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 50.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            const BoxDecoration(),
-                                                        child: Text(
-                                                          listViewTracksRecord
-                                                              .title,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          10.0, 0.0, 0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.play_arrow,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        size: 24.0,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ].divide(const SizedBox(height: 30.0)),
-                  ),
-                ),
-              ),
-              wrapWithModel(
-                model: _model.navBar1Model,
-                updateCallback: () => setState(() {}),
-                child: const NavBar1Widget(),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 50.0, 20.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 153.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: StreamBuilder<List<TracksRecord>>(
-                    stream: queryTracksRecord(),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
-                      }
-                      List<TracksRecord> advanceMusicPlayerTracksRecordList =
-                          snapshot.data!;
-                      return SizedBox(
-                        width: double.infinity,
-                        height: 130.0,
-                        child: custom_widgets.AdvanceMusicPlayer(
-                          width: double.infinity,
-                          height: 130.0,
-                          initialUrl: FFAppState().currentURL,
-                          sliderActiveColor: const Color(0xFFE4AE6A),
-                          sliderInactiveColor:
-                              FlutterFlowTheme.of(context).primary,
-                          backwardIconPath: Icon(
-                            Icons.replay_10_sharp,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          forwardIconPath: Icon(
-                            Icons.forward_10_sharp,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          backwardIconColor: FlutterFlowTheme.of(context).error,
-                          forwardIconColor: FlutterFlowTheme.of(context).error,
-                          pauseIconPath: Icon(
-                            Icons.pause_sharp,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          playIconPath: Icon(
-                            Icons.play_arrow,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          pauseIconColor: FlutterFlowTheme.of(context).error,
-                          playIconColor: FlutterFlowTheme.of(context).error,
-                          playbackDurationTextColor:
-                              FlutterFlowTheme.of(context).error,
-                          previousIconPath: Icon(
-                            Icons.skip_previous,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          nextIconPath: Icon(
-                            Icons.skip_next_sharp,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
-                          previousIconColor: FlutterFlowTheme.of(context).error,
-                          nextIconColor: FlutterFlowTheme.of(context).error,
-                          startPositionMillis: 0.0,
-                          musicUrls: List.generate(
-                              random_data.randomInteger(0, 0),
-                              (index) => random_data.randomName(true, false)),
-                        ),
-                      );
-                    },
-                  ),
+                      },
+                    ),
+                  ].divide(const SizedBox(height: 30.0)),
                 ),
               ),
-            ],
-          ),
+            ),
+            wrapWithModel(
+              model: _model.navBar1Model,
+              updateCallback: () => setState(() {}),
+              child: const NavBar1Widget(),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(20.0, 50.0, 20.0, 0.0),
+              child: Container(
+                width: double.infinity,
+                height: 153.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -135,7 +135,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 child: custom_widgets.QasasPlayer(
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   height: MediaQuery.sizeOf(context).height * 0.4,
-                  initialUrl: FFAppConstants.initialTrack,
                   sliderActiveColor: FlutterFlowTheme.of(context).secondary,
                   sliderInactiveColor:
                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -149,10 +148,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     size: 24.0,
                   ),
-                  musicUrls: FFAppConstants.tracks,
-                  musicTitles: FFAppConstants.titles,
-                  playlistImage:
-                      'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/new-qasas-f219mx/assets/3tgx6hyivp6h/NEW2_LOGO-PWA-512-Noa.png',
                 ),
               ),
             ),

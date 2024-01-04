@@ -115,6 +115,16 @@ class TracksRecord extends FirestoreRecord {
   List<String> get trackUrlList => _trackUrlList ?? const [];
   bool hasTrackUrlList() => _trackUrlList != null;
 
+  // "audioURL" field.
+  String? _audioURL;
+  String get audioURL => _audioURL ?? '';
+  bool hasAudioURL() => _audioURL != null;
+
+  // "audioUrlListX" field.
+  List<String>? _audioUrlListX;
+  List<String> get audioUrlListX => _audioUrlListX ?? const [];
+  bool hasAudioUrlListX() => _audioUrlListX != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _description = snapshotData['description'] as String?;
@@ -136,6 +146,8 @@ class TracksRecord extends FirestoreRecord {
     _audioUrlList = getDataList(snapshotData['audioUrlList']);
     _trackId = snapshotData['track_id'] as String?;
     _trackUrlList = getDataList(snapshotData['trackUrlList']);
+    _audioURL = snapshotData['audioURL'] as String?;
+    _audioUrlListX = getDataList(snapshotData['audioUrlListX']);
   }
 
   static CollectionReference get collection =>
@@ -188,6 +200,7 @@ Map<String, dynamic> createTracksRecordData({
   String? age,
   String? audioUrl,
   String? trackId,
+  String? audioURL,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -207,6 +220,7 @@ Map<String, dynamic> createTracksRecordData({
       'age': age,
       'audioUrl': audioUrl,
       'track_id': trackId,
+      'audioURL': audioURL,
     }.withoutNulls,
   );
 
@@ -238,7 +252,9 @@ class TracksRecordDocumentEquality implements Equality<TracksRecord> {
         e1?.audioUrl == e2?.audioUrl &&
         listEquality.equals(e1?.audioUrlList, e2?.audioUrlList) &&
         e1?.trackId == e2?.trackId &&
-        listEquality.equals(e1?.trackUrlList, e2?.trackUrlList);
+        listEquality.equals(e1?.trackUrlList, e2?.trackUrlList) &&
+        e1?.audioURL == e2?.audioURL &&
+        listEquality.equals(e1?.audioUrlListX, e2?.audioUrlListX);
   }
 
   @override
@@ -262,7 +278,9 @@ class TracksRecordDocumentEquality implements Equality<TracksRecord> {
         e?.audioUrl,
         e?.audioUrlList,
         e?.trackId,
-        e?.trackUrlList
+        e?.trackUrlList,
+        e?.audioURL,
+        e?.audioUrlListX
       ]);
 
   @override

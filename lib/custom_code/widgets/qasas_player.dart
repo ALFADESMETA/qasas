@@ -19,49 +19,37 @@ class QasasPlayer extends StatefulWidget {
     Key? key,
     this.width,
     this.height,
-    required this.initialUrl,
-    required this.musicUrls,
-    required this.musicTitles,
     required this.sliderActiveColor,
     required this.sliderInactiveColor,
-    required this.playIconPath,
-    required this.pauseIconPath,
-    required this.playlistImage,
+    required this.playIconPath, // Ensure this is defined
+    required this.pauseIconPath, // Ensure this is defined
   }) : super(key: key);
 
   final double? width;
   final double? height;
-  final String initialUrl;
-  final List<String> musicUrls;
-  final List<String> musicTitles;
   final Color sliderActiveColor;
   final Color sliderInactiveColor;
-  final Widget playIconPath;
-  final Widget pauseIconPath;
-  final String playlistImage;
+  final Widget playIconPath; // Ensure this is a Widget
+  final Widget pauseIconPath; // Ensure this is a Widget
 
   @override
   _QasasPlayerState createState() => _QasasPlayerState();
 }
 
 class _QasasPlayerState extends State<QasasPlayer> {
-  late int currentSongIndex;
+  late PlayerBloc playerBloc;
   late Map<String, double> speedValues;
 
   @override
   void initState() {
     super.initState();
-    currentSongIndex = widget.musicUrls.indexOf(widget.initialUrl);
+    playerBloc = context.read<PlayerBloc>();
     speedValues = {
       '0.5x': 0.5,
       '1.0x': 1.0,
       '1.5x': 1.5,
       '2.0x': 2.0,
     };
-    // Load the initial track
-    context
-        .read<PlayerBloc>()
-        .add(LoadTrack(url: widget.initialUrl, imageUrl: widget.playlistImage));
   }
 
   @override
@@ -69,12 +57,13 @@ class _QasasPlayerState extends State<QasasPlayer> {
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
         if (state is PlayerInitial) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         bool isPlaying = state is PlayerPlaying;
         Duration currentPosition = state.position;
         Duration totalDuration = state.totalDuration;
+        // print(currentPosition);
 
         return Container(
           width: widget.width,
@@ -82,33 +71,10 @@ class _QasasPlayerState extends State<QasasPlayer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Track Progress Slider
-              Slider(
-                value: currentPosition.inMilliseconds.toDouble(),
-                min: 0,
-                max: totalDuration.inMilliseconds.toDouble(),
-                onChanged: (value) {
-                  context.read<PlayerBloc>().add(UpdatePosition(
-                      position: Duration(milliseconds: value.toInt())));
-                },
-                activeColor: widget.sliderActiveColor,
-                inactiveColor: widget.sliderInactiveColor,
-              ),
-              // Playback Duration
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(_formatDuration(currentPosition)),
-                    Text(_formatDuration(totalDuration)),
-                  ],
-                ),
-              ),
-              // Player Controls
-              _buildPlayerControls(context, isPlaying),
-              // Speed Controls
-              _buildSpeedControls(context),
+              _buildTrackProgressSlider(currentPosition, totalDuration),
+              _buildPlaybackDuration(currentPosition, totalDuration),
+              _buildPlayerControls(isPlaying),
+              _buildSpeedControls(),
             ],
           ),
         );
@@ -116,64 +82,90 @@ class _QasasPlayerState extends State<QasasPlayer> {
     );
   }
 
-  Widget _buildPlayerControls(BuildContext context, bool isPlaying) {
+  Slider _buildTrackProgressSlider(
+      Duration currentPosition, Duration totalDuration) {
+    return Slider(
+      value: currentPosition.inMilliseconds.toDouble() <=
+              totalDuration.inMilliseconds.toDouble()
+          ? currentPosition.inMilliseconds.toDouble()
+          : 0,
+      min: 0,
+      max: totalDuration.inMilliseconds.toDouble(),
+      onChanged: (value) {
+        playerBloc.add(
+            UpdatePosition(position: Duration(milliseconds: value.toInt())));
+      },
+      activeColor: widget.sliderActiveColor,
+      inactiveColor: widget.sliderInactiveColor,
+    );
+  }
+
+  Padding _buildPlaybackDuration(
+      Duration currentPosition, Duration totalDuration) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(_formatDuration(currentPosition)),
+          Text(_formatDuration(totalDuration)),
+        ],
+      ),
+    );
+  }
+
+  Row _buildPlayerControls(bool isPlaying) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          icon: Icon(Icons.skip_previous),
-          onPressed: () {
-            context.read<PlayerBloc>().add(PreviousTrack());
-          },
+          icon: const Icon(Icons.skip_previous),
+          onPressed: () => playerBloc.add(PreviousTrack()),
         ),
         IconButton(
-          icon: Icon(Icons.replay_10),
-          onPressed: () {
-            context.read<PlayerBloc>().add(SkipBackward(seconds: 10));
-          },
+          icon: const Icon(Icons.replay_10),
+          onPressed: () => playerBloc.add(SkipBackward(seconds: 10)),
         ),
         IconButton(
           icon: isPlaying ? widget.pauseIconPath : widget.playIconPath,
-          onPressed: () {
-            if (isPlaying) {
-              context.read<PlayerBloc>().add(PauseTrack());
-            } else {
-              int index = currentSongIndex % widget.musicUrls.length;
-              context.read<PlayerBloc>().add(PlayTrack(
-                  url: widget.musicUrls[index],
-                  imageUrl: widget.playlistImage));
-            }
-          },
+          onPressed: () => _handlePlayPause(isPlaying),
         ),
         IconButton(
-          icon: Icon(Icons.forward_10),
-          onPressed: () {
-            context.read<PlayerBloc>().add(SkipForward(seconds: 10));
-          },
+          icon: const Icon(Icons.forward_10),
+          onPressed: () => playerBloc.add(SkipForward(seconds: 10)),
         ),
         IconButton(
-          icon: Icon(Icons.skip_next),
-          onPressed: () {
-            context.read<PlayerBloc>().add(NextTrack());
-          },
+          icon: const Icon(Icons.skip_next),
+          onPressed: () => playerBloc.add(NextTrack()),
         ),
       ],
     );
   }
 
-  Widget _buildSpeedControls(BuildContext context) {
+  void _handlePlayPause(bool isPlaying) {
+    if (isPlaying) {
+      playerBloc.add(PauseTrack());
+    } else {
+      playerBloc.add(PlayTrack(
+        url: playerBloc.musicUrls[playerBloc.currentTrackIndex],
+        imageUrl: playerBloc.playlistImage,
+      ));
+    }
+  }
+
+  Widget _buildSpeedControls() {
+    String currentSpeed = speedValues.keys.firstWhere(
+      (k) => speedValues[k] == playerBloc.playbackSpeed,
+      orElse: () => '1.0x',
+    );
+
     return DropdownButton<String>(
-      value: speedValues.keys.firstWhere(
-          (k) => speedValues[k] == context.read<PlayerBloc>().playbackSpeed,
-          orElse: () => '1.0x'),
-      onChanged: (String? newSpeed) {
-        if (newSpeed != null) {
-          context
-              .read<PlayerBloc>()
-              .add(SetPlaybackSpeed(speed: speedValues[newSpeed]!));
-        }
+      value: currentSpeed,
+      onChanged: (newSpeed) {
+        currentSpeed = newSpeed.toString();
+        _handleSpeedChange(newSpeed);
       },
-      items: speedValues.keys.map<DropdownMenuItem<String>>((String value) {
+      items: speedValues.keys.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -182,10 +174,14 @@ class _QasasPlayerState extends State<QasasPlayer> {
     );
   }
 
+  void _handleSpeedChange(String? newSpeed) {
+    if (newSpeed != null) {
+      playerBloc.add(SetPlaybackSpeed(speed: speedValues[newSpeed]!));
+    }
+  }
+
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    return "${twoDigits(duration.inHours)}:${twoDigits(duration.inMinutes.remainder(60))}:${twoDigits(duration.inSeconds.remainder(60))}";
   }
 }

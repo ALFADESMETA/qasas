@@ -19,7 +19,6 @@ void main() async {
   // Start initial custom actions code
   await actions.changeStatusBarColor();
   await actions.fixDeviceOrientationUp();
-  await actions.stopAudio();
   await actions.initAudioService();
   // End initial custom actions code
 

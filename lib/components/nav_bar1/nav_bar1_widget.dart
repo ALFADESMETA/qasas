@@ -1,9 +1,6 @@
-import '/components/miniplayer/miniplayer_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'nav_bar1_model.dart';
 export 'nav_bar1_model.dart';
@@ -15,24 +12,8 @@ class NavBar1Widget extends StatefulWidget {
   _NavBar1WidgetState createState() => _NavBar1WidgetState();
 }
 
-class _NavBar1WidgetState extends State<NavBar1Widget>
-    with TickerProviderStateMixin {
+class _NavBar1WidgetState extends State<NavBar1Widget> {
   late NavBar1Model _model;
-
-  final animationsMap = {
-    'miniplayerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 1000.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-  };
 
   @override
   void setState(VoidCallback callback) {
@@ -63,11 +44,6 @@ class _NavBar1WidgetState extends State<NavBar1Widget>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        wrapWithModel(
-          model: _model.miniplayerModel,
-          updateCallback: () => setState(() {}),
-          child: const MiniplayerWidget(),
-        ).animateOnPageLoad(animationsMap['miniplayerOnPageLoadAnimation']!),
         Container(
           width: double.infinity,
           height: 90.0,
