@@ -129,7 +129,6 @@ class TracksRecord extends FirestoreRecord {
   int? _index;
   int get index => _index ?? 0;
   bool hasIndex() => _index != null;
-
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _description = snapshotData['description'] as String?;
@@ -291,6 +290,7 @@ class TracksRecordDocumentEquality implements Equality<TracksRecord> {
         e?.audioURL,
         e?.audioUrlListX,
         e?.index
+
       ]);
 
   @override
