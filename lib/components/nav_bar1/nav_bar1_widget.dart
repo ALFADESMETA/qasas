@@ -2,12 +2,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'nav_bar1_model.dart';
 export 'nav_bar1_model.dart';
 
 class NavBar1Widget extends StatefulWidget {
-
   const NavBar1Widget({super.key});
 
   @override
