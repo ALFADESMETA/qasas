@@ -89,7 +89,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),

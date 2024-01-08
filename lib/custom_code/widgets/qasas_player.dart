@@ -3,12 +3,14 @@ import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
+import '/custom_code/widgets/index.dart'; // Imports other custom widgets
 import '/custom_code/actions/index.dart'; // Imports custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-import 'package:flutter/material.dart';
+
+import 'index.dart'; // Imports other custom widgets
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/custom_code/actions/player_bloc.dart';
 import '/custom_code/actions/player_event.dart';
@@ -85,7 +87,10 @@ class _QasasPlayerState extends State<QasasPlayer> {
   Slider _buildTrackProgressSlider(
       Duration currentPosition, Duration totalDuration) {
     return Slider(
-      value: currentPosition.inMilliseconds.toDouble()<=totalDuration.inMilliseconds.toDouble()?currentPosition.inMilliseconds.toDouble():0,
+      value: currentPosition.inMilliseconds.toDouble() <=
+              totalDuration.inMilliseconds.toDouble()
+          ? currentPosition.inMilliseconds.toDouble()
+          : 0,
       min: 0,
       max: totalDuration.inMilliseconds.toDouble(),
       onChanged: (value) {
@@ -158,14 +163,13 @@ class _QasasPlayerState extends State<QasasPlayer> {
 
     return DropdownButton<String>(
       value: currentSpeed,
-      onChanged:  (newSpeed){
-        currentSpeed=newSpeed.toString();
+      onChanged: (newSpeed) {
+        currentSpeed = newSpeed.toString();
         _handleSpeedChange(newSpeed);
       },
       items: speedValues.keys.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-
           child: Text(value),
         );
       }).toList(),

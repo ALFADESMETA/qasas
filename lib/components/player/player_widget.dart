@@ -4,20 +4,17 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import 'player_model.dart';
 export 'player_model.dart';
 
 class PlayerWidget extends StatefulWidget {
   const PlayerWidget({
-    Key? key,
+    super.key,
     this.track,
     this.tracklist,
     this.tracktitle,
-  }) : super(key: key);
+  });
 
   final String? track;
   final List<String>? tracklist;
@@ -68,7 +65,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          alignment: AlignmentDirectional(-1, 0),
+          alignment: const AlignmentDirectional(-1.0, 0.0),
           image: Image.asset(
             'assets/images/NEW2_LOGO-TRANS.png',
           ).image,
@@ -78,9 +75,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
             FlutterFlowTheme.of(context).primary,
             FlutterFlowTheme.of(context).accent1
           ],
-          stops: [0, 1],
-          begin: AlignmentDirectional(0, -1),
-          end: AlignmentDirectional(0, 1),
+          stops: const [0.0, 1.0],
+          begin: const AlignmentDirectional(0.0, -1.0),
+          end: const AlignmentDirectional(0, 1.0),
         ),
       ),
       child: Column(
@@ -91,16 +88,16 @@ class _PlayerWidgetState extends State<PlayerWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                 child: FlutterFlowIconButton(
                   borderColor: FlutterFlowTheme.of(context).primary,
-                  borderRadius: 20,
-                  borderWidth: 1,
-                  buttonSize: 40,
+                  borderRadius: 20.0,
+                  borderWidth: 1.0,
+                  buttonSize: 40.0,
                   icon: Icon(
                     Icons.arrow_back,
                     color: FlutterFlowTheme.of(context).primaryText,
-                    size: 24,
+                    size: 24.0,
                   ),
                   onPressed: () async {
                     context.safePop();
@@ -111,28 +108,28 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           ),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.0),
               border: Border.all(
                 color: FlutterFlowTheme.of(context).alternate,
-                width: 1,
+                width: 1.0,
               ),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
                 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/new-qasas-f219mx/assets/3tgx6hyivp6h/NEW2_LOGO-PWA-512-Noa.png',
-                width: 300,
-                height: 200,
+                width: 300.0,
+                height: 200.0,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Container(
             width: double.infinity,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: Align(
-              alignment: AlignmentDirectional(0, 0),
-              child: Container(
+              alignment: const AlignmentDirectional(0.0, 0.0),
+              child: SizedBox(
                 width: MediaQuery.sizeOf(context).width * 0.9,
                 height: MediaQuery.sizeOf(context).height * 0.4,
                 child: custom_widgets.QasasPlayer(
@@ -144,12 +141,13 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   pauseIconPath: Icon(
                     Icons.pause_sharp,
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24,
+                    size: 24.0,
+
                   ),
                   playIconPath: Icon(
                     Icons.play_arrow,
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 24,
+                    size: 24.0,
                   ),
                 ),
               ),

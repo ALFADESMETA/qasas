@@ -1,16 +1,14 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'nav_bar1_model.dart';
 export 'nav_bar1_model.dart';
 
 class NavBar1Widget extends StatefulWidget {
-  const NavBar1Widget({Key? key}) : super(key: key);
+
+  const NavBar1Widget({super.key});
 
   @override
   _NavBar1WidgetState createState() => _NavBar1WidgetState();
@@ -50,8 +48,8 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
       children: [
         Container(
           width: double.infinity,
-          height: 90,
-          decoration: BoxDecoration(
+          height: 90.0,
+          decoration: const BoxDecoration(
             color: Color(0x00EEEEEE),
           ),
           child: Stack(
@@ -62,32 +60,32 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 children: [
                   Material(
                     color: Colors.transparent,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
+                    elevation: 0.0,
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(0),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
+                        bottomLeft: Radius.circular(0.0),
+                        bottomRight: Radius.circular(0.0),
+                        topLeft: Radius.circular(50.0),
+                        topRight: Radius.circular(50.0),
                       ),
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: 70,
+                      height: 70.0,
                       decoration: BoxDecoration(
-                        color: Color(0xFF777777),
-                        boxShadow: [
+                        color: const Color(0xFF777777),
+                        boxShadow: const [
                           BoxShadow(
-                            blurRadius: 4,
+                            blurRadius: 4.0,
                             color: Colors.white,
-                            offset: Offset(0, 2),
+                            offset: Offset(0.0, 2.0),
                           )
                         ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(0.0),
+                          bottomRight: Radius.circular(0.0),
+                          topLeft: Radius.circular(50.0),
+                          topRight: Radius.circular(50.0),
                         ),
                         border: Border.all(
                           color: Colors.white,
@@ -104,13 +102,13 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                 children: [
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 50,
-                    icon: Icon(
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const Icon(
                       Icons.home_rounded,
                       color: Colors.white,
-                      size: 30,
+                      size: 30.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');
@@ -118,19 +116,19 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 50,
-                    icon: Icon(
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const Icon(
                       Icons.grid_view_rounded,
                       color: Colors.white,
-                      size: 30,
+                      size: 30.0,
                     ),
                     onPressed: () async {
                       context.pushNamed(
                         'addTrack',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: TransitionInfo(
+                          kTransitionInfoKey: const TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.fade,
                             duration: Duration(milliseconds: 0),
@@ -144,17 +142,18 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                         child: FlutterFlowIconButton(
-                          borderColor: Color(0xFFD59C50),
-                          borderRadius: 30,
-                          borderWidth: 2,
-                          buttonSize: 60,
+                          borderColor: const Color(0xFFD59C50),
+                          borderRadius: 30.0,
+                          borderWidth: 2.0,
+                          buttonSize: 60.0,
                           fillColor: Colors.white,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.search_sharp,
                             color: Color(0xFFD59C50),
-                            size: 35,
+                            size: 35.0,
                           ),
                           onPressed: () {
                             print('MiddleButton pressed ...');
@@ -165,29 +164,29 @@ class _NavBar1WidgetState extends State<NavBar1Widget> {
                   ),
                   FlutterFlowIconButton(
                     borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 50,
-                    icon: Icon(
+                    borderRadius: 30.0,
+                    borderWidth: 1.0,
+                    buttonSize: 50.0,
+                    icon: const Icon(
                       Icons.favorite_rounded,
                       color: Color(0xFFFFC47B),
-                      size: 30,
+                      size: 30.0,
                     ),
                     onPressed: () {
                       print('IconButton pressed ...');
                     },
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 3),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 3.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 50,
-                      icon: Icon(
+                      borderRadius: 30.0,
+                      borderWidth: 1.0,
+                      buttonSize: 50.0,
+                      icon: const Icon(
                         Icons.person,
                         color: Colors.white,
-                        size: 35,
+                        size: 35.0,
                       ),
                       onPressed: () {
                         print('IconButton pressed ...');
