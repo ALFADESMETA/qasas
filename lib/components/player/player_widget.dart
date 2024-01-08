@@ -142,7 +142,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     Icons.pause_sharp,
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     size: 24.0,
-
                   ),
                   playIconPath: Icon(
                     Icons.play_arrow,
