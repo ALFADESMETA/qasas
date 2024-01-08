@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "127245806562",
+    "project_id": "qasasapp",
+    "storage_bucket": "qasasapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127245806562:android:c3629a81eca53c65a4a7bb",
+        "android_client_info": {
+          "package_name": "com.qasas.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127245806562-ps4vapi0o56l328lob7o5uhkbubej9i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBijc9Ode6zLzQprgkpRSgp4rcSmkHoKeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127245806562-ps4vapi0o56l328lob7o5uhkbubej9i9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "127245806562-t93orh59cr87n114j08u551cvrnl00l1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qasas.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
